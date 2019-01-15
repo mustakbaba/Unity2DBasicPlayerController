@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour
+{
+    
+    public GameObject player;
+    public float cameraFollowSpeed = 2f;
+    //it's for the following camera is how far away from the player on the y axis
+    public float ysi = 5f;
+
+    void Update()
+    {
+      //smooth following
+        transform.position = new Vector3(
+            transform.position.x, player.transform.position.y + ysi,
+            Time.deltaTime * cameraFollowSpeed);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position,
+            Time.deltaTime * cameraFollowSpeed);
+    }
+    
+ 
+}
