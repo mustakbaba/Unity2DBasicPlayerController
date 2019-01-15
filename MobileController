@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+public class Player : MonoBehaviour {
+// the speed of the reset rotation
+	 	public float ResetHiz = 0.1f;
+    //the speed of the player
+    public float hiz = 14f;
+    //the speed of the rotating right/left
+    public float donHiz = 0.1f;
+   
+
+    void Update()
+    {
+    //to move up
+        transform.position += transform.up * Time.deltaTime * hiz;
+    //to turn right
+        Quaternion SagDon = Quaternion.AngleAxis(45, Vector3.back);
+    //to turn left
+        Quaternion SolDon = Quaternion.AngleAxis(45, Vector3.forward);        
+       
+            foreach (Touch touch in Input.touches)
+            {
+                   if (touch.position.y < Screen.height / 1.5f)
+                    {
+
+                        if (touch.position.x > Screen.width / 2)
+                        {
+                        //if we touch right of the screen it will be turn right and up speed to 15f
+                    hiz = 15f;
+                            transform.rotation = Quaternion.Slerp(transform.rotation, SagDon, 0.1f);
+                        }
+                        if (touch.position.x < Screen.width / 2)
+                        {
+                         //if we touch right of the screen it will be turn right and up speed to 15f
+hiz = 15f;
+                            transform.rotation = Quaternion.Slerp(transform.rotation, SolDon, 0.1f);
+                        }                     }
+            }
+        if (Input.touchCount < 1)
+        {
+        //if no touch on screen, down speed to 14f
+            hiz = 14f;   
+            //and reset the rotation of the player 
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, 0), ResetHiz);
+        }
+        }
+    
+}
